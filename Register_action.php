@@ -20,7 +20,7 @@
       
         exit();
 
-        $sql = "INSERT INTO Register_tb ('username','password','email','term','letter')";
+        $sql = "INSERT INTO Register_tb ('username','password','email','gender','age','country','dateofbirth','Tel','term','letter')";
         $exc = $connection->query($sql);
 
         if($exc === true){
