@@ -46,11 +46,11 @@ CREATE TABLE `register_tb` (
 --
 
 INSERT INTO `register_tb` (`id`, `username`, `password`, `email`, `gender`, `age`, `country`, `dateofbirth`, `tel`, `term`, `letter`) VALUES
-(1, 'Peeraphatw', 'test', 'Judiciarypz@gmail.com', 'm', 23, 'thailand', '2021-01-04', '944368295', 'on', 'on'),
-(2, 'Peeraphatw2', 'test2', 'Judiciarypz@gmail.com', 'm', 23, 'thailand', '2021-01-04', '944368295', 'on', 'on'),
-(3, 'Peeraphatw3', 'test3', 'Judiciarypz@gmail.com', 'm', 23, 'thailand', '2021-01-04', '944368295', 'on', 'on'),
-(4, 'Peeraphatw4', 'test4', 'Judiciarypz@gmail.com', 'm', 23, 'thailand', '2021-01-04', '944368295', 'on', 'on'),
-(5, 'Peeraphatw', 'test', 'Judiciarypz@gmail.com', 'm', 23, 'thailand', '2021-01-04', '944368295', 'on', 'on');
+(1, 'Peeraphatw', 'test', 'Judiciarypz@gmail.com', 'm', 23, 'thailand', '2021-01-04', '0944368295', 'on', 'on'),
+(2, 'Peeraphatw2', 'test2', 'Judiciarypz@gmail.com', 'm', 23, 'thailand', '2021-01-04', '0944368295', 'on', 'on'),
+(3, 'Peeraphatw3', 'test3', 'Judiciarypz@gmail.com', 'm', 23, 'thailand', '2021-01-04', '0944368295', 'on', 'on'),
+(4, 'Peeraphatw4', 'test4', 'Judiciarypz@gmail.com', 'm', 23, 'thailand', '2021-01-04', '0944368295', 'on', 'on'),
+(5, 'Peeraphatw', 'test', 'Judiciarypz@gmail.com', 'm', 23, 'thailand', '2021-01-04', '0944368295', 'on', 'on');
 
 --
 -- Indexes for dumped tables
@@ -70,7 +70,7 @@ ALTER TABLE `register_tb`
 -- AUTO_INCREMENT for table `register_tb`
 --
 ALTER TABLE `register_tb`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
