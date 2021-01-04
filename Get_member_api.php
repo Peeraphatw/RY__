@@ -9,16 +9,13 @@
                 parent::__construct("mysql:host=localhost;dbname=ry_db",'root','',
                 array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
                 $this->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
-                $this->setAttribute(PDO::ATTR_EMULATE_PREPARES,FALSE);
-                
+                $this->setAttribute(PDO::ATTR_EMULATE_PREPARES,FALSE);         
             }
             catch
             (PDOExpection $e)
             {
                 echo $e->getMessage();
             }
-           
-
         }
 
         public function OpenAPI()
@@ -66,9 +63,10 @@ if($_SERVER['REQUEST_METHOD'] === 'GET')
 {
     $apiSelf = new PDOCONFIG;
     echo $apiSelf->OpenAPI();
-}else
+}
+else
 {
-    echo json_encode($_SERVER['REQUEST_METHOD']."  Method not allowed");
+    echo json_encode($_SERVER['REQUEST_METHOD']." / Method not allowed");
 }
 
 
