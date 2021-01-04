@@ -604,6 +604,7 @@
                                 >lorem ipsum dolor sit amet, consectetur
                                 adipisicing elit</span
                               >
+                              <p id="member-counter" style="color: #2ECC71;">Member Counte</p>
                               <div class="card-header-right">
                                 <ul class="list-unstyled card-option">
                                   <li>
@@ -631,7 +632,7 @@
                             <div class="card-block">
                               <div class="table-responsive m-0 p-0">
                                 <table class="table table-hover">
-                                  <thead class="text-capitalize">
+                                  <thead class="text-capitalize text-center">
                                     <tr>
                                       <th>No</th>
                                       <th>Username</th>
@@ -644,10 +645,11 @@
                                       <th>Phone</th>
                                       <th>TermSubscribe</th>
                                       <th>LetterSubscribe</th>
+                                      <th>Member Control</th>
                                     </tr>
                                   </thead>
                                   <tbody id="data-table">
-                                    <tr>
+                                    <tr style="cursor: pointer;">
                                       <td>1</td>
                                       <td>PeeraphatW</td>
                                       <td>Judiciarypz@gmail.com</td>
@@ -659,6 +661,7 @@
                                       <td>0944368295</td>
                                       <td>On</td>
                                       <td>On</td>
+                                      <td><button class="btn waves-effect waves-light btn-danger"><i class="icofont icofont-eye-alt"></i>Danger Button</button></td>
                                     </tr>
                                   </tbody>
                                 </table>
@@ -730,7 +733,7 @@
     <script>
       const dataTable = document.querySelector('#data-table');
       const AddData = (data) => {
-        console.log(data);
+        
         if (data === '') {
           return;
         } else {
@@ -738,10 +741,12 @@
         }
 
         const key = Object.keys(data);
+        document.querySelector('#member-counter').innerHTML = 'Member Counte : ';
+        document.querySelector('#member-counter').innerHTML += `${key.length}`;
         dataTable.innerHTML = '';
         for (let i = 0; i <= key.length; i++) {
           const row = document.createElement('tr');
-
+          row.style.cursor = 'pointer';
           row.innerHTML = `
           <td>${data[key[i]].id}</td>
           <td>${data[key[i]].username}</td>
@@ -754,6 +759,12 @@
           <td>${data[key[i]].phone}</td>
           <td>${data[key[i]].term}</td>
           <td>${data[key[i]].letter}</td>
+          <td>
+           <button class="btn waves-effect waves-light btn-success"><i class="icofont icofont-eye-alt"></i>Edit</button>
+           
+              <button  class="btn waves-effect waves-light btn-danger" value=${data[key[i]].id} onclick="deleteMember(this.value)"><i class="icofont icofont-check-circled"></i>Delete</button>
+              
+            </td>
           `;
 
           dataTable.appendChild(row);
@@ -772,7 +783,30 @@
             AddData(data);
           })
           .catch((error) => console.log(error));
-      }, 2000).catch((error) => console.log(error));
+      }, 2000);
+
+
+      const deleteMember = (id)=>{
+        fetch('Get_member_api.php',{
+          method : "POST",
+          body : new URLSearchParams(`id=${id}`)
+        }).then(data => 
+        {
+          if(data.status === 200)
+          {
+            fetch('Get_member_api.php', { method: 'GET' })
+            .then((data) => data.json())
+            .then((data) => {
+            AddData(data);
+        });
+          }
+        }).catch(e => console.log(e))
+        
+      }
+      
+
+     
+      
     </script>
     <script
       type="text/javascript"

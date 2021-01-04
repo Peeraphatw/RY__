@@ -41,8 +41,22 @@
             }
             return json_encode($members);
         }
-    }
 
+        public function DeleteMember($id)
+        {
+            try
+            {
+                $data = $this->prepare('DELETE FROM Register_tb WHERE id = '.$id);
+                $data->execute();
+            }catch(PDOExpection $e)
+            {
+                echo $e->getMessage();
+            }
+
+             return json_encode("DELETE Record of ID".$id);
+            
+        }
+    }
     // class memberApi{
     //     public function GetRequest()
     //     {
@@ -56,17 +70,18 @@
     //         //while($output = $data->fetch())
     //     }
     // }
-
-  
-
 if($_SERVER['REQUEST_METHOD'] === 'GET')
 {
     $apiSelf = new PDOCONFIG;
     echo $apiSelf->OpenAPI();
+}elseif($_SERVER['REQUEST_METHOD'] === 'POST')
+{
+    $apiSelf = new PDOCONFIG;
+    echo $apiSelf->DeleteMember($_REQUEST['id']);
 }
 else
 {
-    echo json_encode($_SERVER['REQUEST_METHOD']." / Method not allowed");
+    echo json_encode($_SERVER['REQUEST_METHOD']." / Method Not Allowed");
 }
 
 

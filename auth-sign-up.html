@@ -401,11 +401,10 @@
           });
 
       allCountries();
+      const pass = document.querySelector('#password');
+      const passCon = document.querySelector('#confirm-password');
 
       const validatePWD = () => {
-        const pass = document.querySelector('#password');
-        const passCon = document.querySelector('#confirm-password');
-
         if (pass.value !== passCon.value) {
           console.log(pass.value + '!=' + passCon.value);
           console.log(typeof pass.value);
@@ -428,7 +427,7 @@
             this.submit();
             console.log(this);
           } else {
-            alert(typeof status);
+             document.querySelector('#confirm-password').style.backgroundColor = '#FB5959';
           }
         });
     </script>
