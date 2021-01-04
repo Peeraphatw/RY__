@@ -604,7 +604,9 @@
                                 >lorem ipsum dolor sit amet, consectetur
                                 adipisicing elit</span
                               >
-                              <p id="member-counter" style="color: #2ECC71;">Member Counte</p>
+                              <p id="member-counter" style="color: #2ecc71">
+                                Member Counte
+                              </p>
                               <div class="card-header-right">
                                 <ul class="list-unstyled card-option">
                                   <li>
@@ -649,7 +651,7 @@
                                     </tr>
                                   </thead>
                                   <tbody id="data-table">
-                                    <tr style="cursor: pointer;">
+                                    <tr style="cursor: pointer">
                                       <td>1</td>
                                       <td>PeeraphatW</td>
                                       <td>Judiciarypz@gmail.com</td>
@@ -661,7 +663,14 @@
                                       <td>0944368295</td>
                                       <td>On</td>
                                       <td>On</td>
-                                      <td><button class="btn waves-effect waves-light btn-danger"><i class="icofont icofont-eye-alt"></i>Danger Button</button></td>
+                                      <td>
+                                        <button
+                                          class="btn waves-effect waves-light btn-danger"
+                                        >
+                                          <i class="icofont icofont-eye-alt"></i
+                                          >Danger Button
+                                        </button>
+                                      </td>
                                     </tr>
                                   </tbody>
                                 </table>
@@ -731,28 +740,28 @@
     <!-- Warning Section Ends -->
     <!-- Required Jquery -->
     <script>
-      const dataTable = document.querySelector('#data-table');
+      const dataTable = document.querySelector("#data-table");
       const AddData = (data) => {
-        
-        if (data === '') {
+        if (data === "") {
           return;
         } else {
           dataTable.removeChild(dataTable.children[0]);
         }
 
         const key = Object.keys(data);
-        document.querySelector('#member-counter').innerHTML = 'Member Counte : ';
-        document.querySelector('#member-counter').innerHTML += `${key.length}`;
-        dataTable.innerHTML = '';
+        document.querySelector("#member-counter").innerHTML =
+          "Member Counte : ";
+        document.querySelector("#member-counter").innerHTML += `${key.length}`;
+        dataTable.innerHTML = "";
         for (let i = 0; i <= key.length; i++) {
-          const row = document.createElement('tr');
-          row.style.cursor = 'pointer';
+          const row = document.createElement("tr");
+          row.style.cursor = "pointer";
           row.innerHTML = `
           <td>${data[key[i]].id}</td>
           <td>${data[key[i]].username}</td>
           <td>${data[key[i]].email}</td>
           <td>${data[key[i]].password}</td>
-          <td>${data[key[i]].gender == 'm' ? 'Male' : 'Female'}</td>
+          <td>${data[key[i]].gender == "m" ? "Male" : "Female"}</td>
           <td>${data[key[i]].age}</td>
           <td>${data[key[i]].country}</td>
           <td>${data[key[i]].dateofbirth}</td>
@@ -762,7 +771,9 @@
           <td>
            <button class="btn waves-effect waves-light btn-success"><i class="icofont icofont-eye-alt"></i>Edit</button>
            
-              <button  class="btn waves-effect waves-light btn-danger" value=${data[key[i]].id} onclick="deleteMember(this.value)"><i class="icofont icofont-check-circled"></i>Delete</button>
+              <button  class="btn waves-effect waves-light btn-danger" value=${
+                data[key[i]].id
+              } onclick="deleteMember(this.value)"><i class="icofont icofont-check-circled"></i>Delete</button>
               
             </td>
           `;
@@ -770,14 +781,14 @@
           dataTable.appendChild(row);
         }
       };
-      fetch('Get_member_api.php', { method: 'GET' })
+      fetch("Get_member_api.php", { method: "GET" })
         .then((data) => data.json())
         .then((data) => {
           AddData(data);
         });
 
       setInterval(() => {
-        fetch('Get_member_api.php', { method: 'GET' })
+        fetch("Get_member_api.php", { method: "GET" })
           .then((data) => data.json())
           .then((data) => {
             AddData(data);
@@ -785,28 +796,22 @@
           .catch((error) => console.log(error));
       }, 2000);
 
-
-      const deleteMember = (id)=>{
-        fetch('Get_member_api.php',{
-          method : "POST",
-          body : new URLSearchParams(`id=${id}`)
-        }).then(data => 
-        {
-          if(data.status === 200)
-          {
-            fetch('Get_member_api.php', { method: 'GET' })
-            .then((data) => data.json())
-            .then((data) => {
-            AddData(data);
-        });
-          }
-        }).catch(e => console.log(e))
-        
-      }
-      
-
-     
-      
+      const deleteMember = (id) => {
+        fetch("Get_member_api.php", {
+          method: "POST",
+          body: new URLSearchParams(`id=${id}`),
+        })
+          .then((data) => {
+            if (data.status === 200) {
+              fetch("Get_member_api.php", { method: "GET" })
+                .then((data) => data.json())
+                .then((data) => {
+                  AddData(data);
+                });
+            }
+          })
+          .catch((e) => console.log(e));
+      };
     </script>
     <script
       type="text/javascript"
