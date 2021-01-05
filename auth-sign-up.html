@@ -64,10 +64,10 @@
     <!-- Style.css -->
     <link rel="stylesheet" type="text/css" href="assets/css/style.css" />
     <style>
-      input[type='date']:required:invalid::-webkit-datetime-edit {
+      input[type="date"]:required:invalid::-webkit-datetime-edit {
         color: transparent;
       }
-      input[type='date']:focus::-webkit-datetime-edit {
+      input[type="date"]:focus::-webkit-datetime-edit {
         color: black !important;
       }
       #gender,
@@ -383,64 +383,64 @@
     <!-- Required Jquery -->
     <script>
       let status = false;
-      const country = document.querySelector('#country');
+      const country = document.querySelector("#country");
       const allCountries = async () =>
-        await fetch('https://api.first.org/data/v1/countries', {
-          method: 'GET',
+        await fetch("https://api.first.org/data/v1/countries", {
+          method: "GET",
         })
           .then((data) => data.json())
           .then((data) => {
             let res = data.data;
             key = Object.keys(res);
             for (let i = 0; i <= key.length - 1; i++) {
-              const opt = document.createElement('option');
+              const opt = document.createElement("option");
               opt.text = res[key[i]].country;
               opt.value = res[key[i]].country;
               country.appendChild(opt);
-              console.log(res[key[i]].country, 'Country', key[i]);
+              console.log(res[key[i]].country, "Country", key[i]);
             }
           });
 
       allCountries();
-      const pass = document.querySelector('#password');
-      const passCon = document.querySelector('#confirm-password');
+      const pass = document.querySelector("#password");
+      const passCon = document.querySelector("#confirm-password");
 
       const validatePWD = () => {
         if (pass.value !== passCon.value) {
-          console.log(pass.value + '!=' + passCon.value);
+          console.log(pass.value + "!=" + passCon.value);
           console.log(typeof pass.value);
           console.log(pass.value);
           console.error(status);
         } else {
-          if (pass.value == '') return;
+          if (pass.value == "") return;
           else status = true;
           console.warn(status);
         }
       };
 
       document
-        .getElementById('form-create')
-        .addEventListener('submit', function (event) {
+        .getElementById("form-create")
+        .addEventListener("submit", function (event) {
           //console.log(this);
           event.preventDefault();
           validatePWD();
           if (status === true) {
             //this.submit();
 
-            fetch('http://localhost/RY__/Get_member_api.php', {
-              method: 'POST',
+            fetch("http://localhost/RY__/Get_member_api.php", {
+              method: "POST",
               body: new FormData(this),
             })
               .then((data) => {
                 console.log(data.status);
-                location.replace('http://localhost/RY__/');
+                location.replace("http://localhost/RY__/sample-page.html");
               })
               .catch((err) => console.log(err.message));
 
             console.log(this);
           } else {
-            document.querySelector('#confirm-password').style.backgroundColor =
-              '#FB5959';
+            document.querySelector("#confirm-password").style.backgroundColor =
+              "#FB5959";
           }
         });
     </script>
