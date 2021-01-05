@@ -98,6 +98,23 @@
                 echo $e->getMessage();
             }
         }
+
+        public function updateMember($param)
+        {
+        $__Id = $param['id'];
+        $__Username = $param['Usr'];
+        $__Password = $param['Pwd'];
+        $__Email = $param['Em'];
+        $__Gender = $param['Gen'];
+        $__Age = $param['Age'];
+        $__Tel = $param['Tel'];
+        $__DateOfBirth = $param['Db'];
+            print_r($param);
+            $data = $this->prepare("UPDATE Register_tb SET username = '$__Username', password = '$__Password', email = '$__Email', gender = '$__Gender'
+            , age = '$__Age'
+            , dateofbirth = '$__DateOfBirth', tel = '$__Tel' WHERE id='$__Id'");
+            $data->execute();
+        }
     }
     // class memberApi{
     //     public function GetRequest()
@@ -128,6 +145,9 @@ if($_SERVER['REQUEST_METHOD'] === 'GET')
     {
         echo $_POST['ReqType'];
         echo $apiSelf->DeleteMember($_REQUEST['id']);
+    }
+    elseif($_POST['ReqType'] == "Update"){
+        $apiSelf->updateMember($_POST);
     }
 }
 else

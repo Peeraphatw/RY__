@@ -740,28 +740,28 @@
     <!-- Warning Section Ends -->
     <!-- Required Jquery -->
     <script>
-      const dataTable = document.querySelector('#data-table');
+      const dataTable = document.querySelector("#data-table");
       const AddData = (data) => {
-        if (data === '') {
+        if (data === "") {
           return;
         } else {
           dataTable.removeChild(dataTable.children[0]);
         }
 
         const key = Object.keys(data);
-        document.querySelector('#member-counter').innerHTML =
-          'Member Counte : ';
-        document.querySelector('#member-counter').innerHTML += `${key.length}`;
-        dataTable.innerHTML = '';
+        document.querySelector("#member-counter").innerHTML =
+          "Member Counte : ";
+        document.querySelector("#member-counter").innerHTML += `${key.length}`;
+        dataTable.innerHTML = "";
         for (let i = 0; i <= key.length; i++) {
-          const row = document.createElement('tr');
-          row.style.cursor = 'pointer';
+          const row = document.createElement("tr");
+          row.style.cursor = "pointer";
           row.innerHTML = `
           <td>${data[key[i]].id}</td>
           <td>${data[key[i]].username}</td>
           <td>${data[key[i]].email}</td>
           <td>${data[key[i]].password}</td>
-          <td>${data[key[i]].gender == 'm' ? 'Male' : 'Female'}</td>
+          <td>${data[key[i]].gender == "m" ? "Male" : "Female"}</td>
           <td>${data[key[i]].age}</td>
           <td>${data[key[i]].country}</td>
           <td>${data[key[i]].dateofbirth}</td>
@@ -769,15 +769,11 @@
           <td>${data[key[i]].term}</td>
           <td>${data[key[i]].letter}</td>
           <td>
-            
-
-
-                <button type="button" class="btn waves-effect waves-light btn-success" data-toggle="modal" data-target="#ModalEdit${
+                <button type="button" onclick="clearInterval(runtime);" class="btn waves-effect waves-light btn-success" data-toggle="modal" data-target="#ModalEdit${
                   data[key[i]].id
                 }">
                   </i>Edit
                 </button>
-           
                   <div class="modal fade" id="ModalEdit${
                     data[key[i]].id
                   }" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -794,7 +790,7 @@
                         <form>
                         <div class="modal-body">
                           <div class="card-block">
-                 
+
                   <div class="form-group form-primary">
                     <input type="text" name="Usr" class="form-control" autocomplete="off" value=${
                       data[key[i]].username
@@ -825,13 +821,13 @@
                       <div class="form-group form-primary">
                         <select name="Gen" id="Gender" class="form-control fill">
                           <option value="${data[key[i]].gender}">${
-            data[key[i]].gender == 'm' ? 'Male' : 'Female'
+            data[key[i]].gender == "m" ? "Male" : "Female"
           }</option>
                       ${
-                        data[key[i]].gender == 'm'
+                        data[key[i]].gender == "m"
                           ? '<option value="f">female</option>'
                           : ' <option value="m">Male</option>'
-                      } 
+                      }
                         </select>
                         <span class="form-bar"></span>
                         <label class="float-label">Gender</label>
@@ -859,12 +855,21 @@
                     }">
                     <span class="form-bar"></span>
                     <label class="float-label">Phone Number(Optional)</label>
-                  </div>            
+                  </div>
                 </div>
                         </div>
                         <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                          <button type="button" class="btn btn-primary">Save changes</button>
+
+                          <input type="hidden" name="id" value="${
+                            data[key[i]].id
+                          }">
+                          <input type="hidden" name="ReqType" value="Update">
+                          <button type="button" class="btn btn-primary" onclick="updateMember(this.form,${
+                            data[key[i]].id
+                          })">Save changes</button>
+                          <button type="button" class="btn btn-secondary" id="close${
+                            data[key[i]].id
+                          }" data-dismiss="modal">Close</button>
                         </div>
                         <form>
                       </div>
@@ -875,22 +880,22 @@
                   <button  class="btn waves-effect waves-light btn-danger" value=${
                     data[key[i]].id
                   } onclick="deleteMember(this.value)"><i class="icofont icofont-check-circled"></i>Delete</button>
-              
+
             </td>
-           
+
           `;
 
           dataTable.appendChild(row);
         }
       };
-      fetch('Get_member_api.php', { method: 'GET' })
+      fetch("Get_member_api.php", { method: "GET" })
         .then((data) => data.json())
         .then((data) => {
           AddData(data);
         });
 
       const runtime = setInterval(() => {
-        fetch('Get_member_api.php', { method: 'GET' })
+        fetch("Get_member_api.php", { method: "GET" })
           .then((data) => data.json())
           .then((data) => {
             AddData(data);
@@ -898,16 +903,14 @@
           .catch((error) => console.log(error));
       }, 2000);
 
-      runtime();
-
       const deleteMember = (id) => {
-        fetch('Get_member_api.php', {
-          method: 'POST',
+        fetch("Get_member_api.php", {
+          method: "POST",
           body: new URLSearchParams(`id=${id}&ReqType=Delete`),
         })
           .then((data) => {
             if (data.status === 200) {
-              fetch('Get_member_api.php', { method: 'GET' })
+              fetch("Get_member_api.php", { method: "GET" })
                 .then((data) => data.json())
                 .then((data) => {
                   AddData(data);
@@ -915,6 +918,23 @@
             }
           })
           .catch((e) => console.log(e));
+      };
+
+      const updateMember = (param, fid) => {
+        console.log(new FormData(param));
+        fetch("Get_member_api.php", {
+          method: "POST",
+          body: new FormData(param),
+        }).then((data) => {
+          if (data.status == 200) {
+            fetch("Get_member_api.php", { method: "GET" })
+              .then((data) => data.json())
+              .then((data) => {
+                AddData(data);
+              });
+          }
+          document.querySelector(`#close${fid}`).click();
+        });
       };
     </script>
     <script
