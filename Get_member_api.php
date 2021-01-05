@@ -56,6 +56,48 @@
              return json_encode("DELETE Record of ID".$id);
             
         }
+
+        public function InsertMeber($param)
+        {
+
+            print_r($param);
+        $__Username = $param['Usr'];
+        $__Password = $param['Pwd'];
+        $__Email = $param['Em'];
+        if(!isset($param['Tm']))
+        {
+            $__Term = 'off';
+        }
+        else
+        {
+            $__Term = $param['Tm'];
+        }
+        if(!isset($param['Lt']))
+        {
+            $__Letter = 'off';
+        }
+        else
+        {
+            $__Letter = $param['Lt'];
+        }  
+        $__Gender = $param['Gen'];
+        $__Age = $param['Age'];
+        $__Country = $param['Cnt'];
+        $__Tel = $param['Tel'];
+        $__DateOfBirth = $param['Db'];
+            
+            try{
+                $data = 
+                $this->prepare("INSERT INTO Register_tb (username, password, email, gender, age, country, dateofbirth, tel, term, letter)
+                VALUES ('$__Username', '$__Password', '$__Email','$__Gender','$__Age','$__Country','$__DateOfBirth','$__Tel','$__Term','$__Letter')");
+                $data->execute();
+
+                
+            }catch(PDOExpection $e)
+            {
+                echo $e->getMessage();
+            }
+        }
     }
     // class memberApi{
     //     public function GetRequest()
@@ -76,8 +118,17 @@ if($_SERVER['REQUEST_METHOD'] === 'GET')
     echo $apiSelf->OpenAPI();
 }elseif($_SERVER['REQUEST_METHOD'] === 'POST')
 {
-    $apiSelf = new PDOCONFIG;
-    echo $apiSelf->DeleteMember($_REQUEST['id']);
+     $apiSelf = new PDOCONFIG;
+
+    if($_POST['ReqType'] == 'Insert')
+    {
+        $apiSelf->InsertMeber($_POST);
+    }elseif
+    ($_POST['ReqType'] == 'Delete')
+    {
+        echo $_POST['ReqType'];
+        echo $apiSelf->DeleteMember($_REQUEST['id']);
+    }
 }
 else
 {

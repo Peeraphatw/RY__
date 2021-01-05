@@ -769,13 +769,115 @@
           <td>${data[key[i]].term}</td>
           <td>${data[key[i]].letter}</td>
           <td>
-           <button class="btn waves-effect waves-light btn-success"><i class="icofont icofont-eye-alt"></i>Edit</button>
+            
+
+
+                <button type="button" class="btn waves-effect waves-light btn-success" data-toggle="modal" data-target="#ModalEdit${
+                  data[key[i]].id
+                }">
+                  </i>Edit
+                </button>
            
-              <button  class="btn waves-effect waves-light btn-danger" value=${
-                data[key[i]].id
-              } onclick="deleteMember(this.value)"><i class="icofont icofont-check-circled"></i>Delete</button>
+                  <div class="modal fade" id="ModalEdit${
+                    data[key[i]].id
+                  }" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel">EditUser ${
+                            data[key[i]].username
+                          }</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <form>
+                        <div class="modal-body">
+                          <div class="card-block">
+                 
+                  <div class="form-group form-primary">
+                    <input type="text" name="Usr" class="form-control" autocomplete="off" value=${
+                      data[key[i]].username
+                    }>
+                    <span class="form-bar"></span>
+                    <label class="float-label">Username</label>
+                  </div>
+                  <div class="form-group form-primary">
+                    <input type="text" name="Em" class="form-control" autocomplete="off" value=${
+                      data[key[i]].email
+                    }>
+                    <span class="form-bar"></span>
+                    <label class="float-label">Email Address</label>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <div class="form-group form-primary">
+                        <input type="test" name="Pwd" id="password" class="form-control" value=${
+                          data[key[i]].password
+                        }>
+                        <span class="form-bar"></span>
+                        <label class="float-label">Password</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <div class="col-sm-6">
+                      <div class="form-group form-primary">
+                        <select name="Gen" id="Gender" class="form-control fill">
+                          <option value="${data[key[i]].gender}">${
+            data[key[i]].gender == 'm' ? 'Male' : 'Female'
+          }</option>
+                      ${
+                        data[key[i]].gender == 'm'
+                          ? '<option value="f">female</option>'
+                          : ' <option value="m">Male</option>'
+                      } 
+                        </select>
+                        <span class="form-bar"></span>
+                        <label class="float-label">Gender</label>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group form-primary">
+                        <input type="number" name="Age" id="" class="form-control" min="0" value="${
+                          data[key[i]].age
+                        }">
+                        <label for="" class="float-label">Age</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group form-primary">
+                    <input type="date" name="Db" class="form-control" value="${
+                      data[key[i]].dateofbirth
+                    }">
+                    <span class="form-bar"></span>
+                    <label class="float-label">Date of Birth</label>
+                  </div>
+                  <div class="form-group form-primary">
+                    <input type="text" maxlength="10" name="Tel" class="form-control" autocomplete="off" value="${
+                      data[key[i]].phone
+                    }">
+                    <span class="form-bar"></span>
+                    <label class="float-label">Phone Number(Optional)</label>
+                  </div>            
+                </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                          <button type="button" class="btn btn-primary">Save changes</button>
+                        </div>
+                        <form>
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <button  class="btn waves-effect waves-light btn-danger" value=${
+                    data[key[i]].id
+                  } onclick="deleteMember(this.value)"><i class="icofont icofont-check-circled"></i>Delete</button>
               
             </td>
+           
           `;
 
           dataTable.appendChild(row);
@@ -787,7 +889,7 @@
           AddData(data);
         });
 
-      setInterval(() => {
+      const runtime = setInterval(() => {
         fetch('Get_member_api.php', { method: 'GET' })
           .then((data) => data.json())
           .then((data) => {
@@ -796,10 +898,12 @@
           .catch((error) => console.log(error));
       }, 2000);
 
+      runtime();
+
       const deleteMember = (id) => {
         fetch('Get_member_api.php', {
           method: 'POST',
-          body: new URLSearchParams(`id=${id}`),
+          body: new URLSearchParams(`id=${id}&ReqType=Delete`),
         })
           .then((data) => {
             if (data.status === 200) {
