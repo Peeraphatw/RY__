@@ -1,15 +1,5 @@
 <!DOCTYPE html>
-<?php
-session_start();
 
-if(!isset($_SESSION['username']))
-{
-  
-  header('location: auth-normal-sign-in.html');
-}
-
-
-?>
 <html lang="en">
 
 <head>
