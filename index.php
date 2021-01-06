@@ -439,7 +439,7 @@ if(!isset($_SESSION['username']))
                                             <a href="sample-page.php" class="waves-effect waves-dark">
                                                 <span class="pcoded-micon"><i
                                                         class="ti-layout-sidebar-left"></i><b>S</b></span>
-                                                <span class="pcoded-mtext">Sample Page</span>
+                                                <span class="pcoded-mtext">Member List</span>
                                                 <span class="pcoded-mcaret"></span>
                                             </a>
                                         </li>
