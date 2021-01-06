@@ -18,6 +18,18 @@
             }
         }
 
+        public function LoginSession($param)
+        {
+            $data = $this->prepare("SELECT * FROM Register_tb WHERE email = '$param[Em]' AND password = '$param[Pwd]'");
+            
+            if($data->execute())
+            {
+                return  json_encode($data->fetch(PDO::FETCH_ASSOC));
+            }else{
+                return json_encode("No User");
+            }
+        }
+
         public function OpenAPI()
         {
             $data = $this->prepare('SELECT * FROM Register_tb');
@@ -148,6 +160,21 @@ if($_SERVER['REQUEST_METHOD'] === 'GET')
     }
     elseif($_POST['ReqType'] == "Update"){
         $apiSelf->updateMember($_POST);
+    }
+    elseif($_POST['ReqType'] == "Login")
+    {
+        
+        $result =  $apiSelf->LoginSession($_POST);
+        echo $result;
+        $res = json_decode($result,true);
+        
+        if($res['username'] != '')
+        {
+            session_start();
+            $_SESSION['username'] = $res['username'];
+        }
+        
+
     }
 }
 else
